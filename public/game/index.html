@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Easter Hunt — Game</title>
+  <link rel="stylesheet" href="/shared/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="/_env.js"></script>
+  <style>
+    .game-top {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      width: 100%;
+    }
+    .question-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      width: 100%;
+      animation: fade-in 0.3s ease;
+    }
+    .clue-panel { animation: fade-in 0.3s ease; width: 100%; }
+
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .question-text {
+      font-size: 1.05rem;
+      font-weight: 600;
+      line-height: 1.55;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+    }
+
+    #wrong-shake {
+      animation: shake 0.35s ease;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-8px); }
+      75% { transform: translateX(8px); }
+    }
+
+    /* Mini leaderboard */
+    .mini-lb {
+      background: var(--cream);
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      width: 100%;
+    }
+    .mini-lb-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .mini-lb-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      padding: 0.2rem 0;
+    }
+    .mini-lb-name { flex: 1; font-weight: 600; }
+    .mini-lb-progress { color: var(--text-muted); font-size: 0.75rem; }
+
+    /* Phase badge */
+    .phase-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .phase-trivia { background: #EDE0FF; color: #5A0099; }
+    .phase-clue   { background: #FFF3CD; color: #7B5200; }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- Top: progress + leaderboard -->
+    <div class="game-top">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:0.5rem;">
+        <span class="egg-icon" style="font-size:1.5rem; animation:none;">🐣</span>
+        <span id="phase-badge" class="phase-badge phase-trivia">🎯 Trivia</span>
+        <span id="round-label" class="text-muted" style="font-size:0.85rem; font-weight:600;">Round 1</span>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+      <div class="progress-label" id="progress-label">Round 1 of 5</div>
+    </div>
+
+    <!-- Trivia section -->
+    <div id="trivia-section" class="question-card hidden">
+      <div style="display:flex; gap:0.4rem; align-items:center; margin-bottom:0.75rem;">
+        <span id="topic-badge" class="topic-badge">topic</span>
+        <span id="question-num" class="text-muted" style="font-size:0.75rem;"></span>
+      </div>
+      <div id="question-text" class="question-text">Loading…</div>
+      <div class="option-grid" id="option-grid">
+        <!-- injected -->
+      </div>
+      <div id="answer-feedback" class="alert hidden" style="margin-top:0.75rem;"></div>
+    </div>
+
+    <!-- Clue section -->
+    <div id="clue-section" class="clue-panel hidden">
+      <div class="clue-card">
+        <p id="clue-text" class="clue-text">Finding your clue…</p>
+      </div>
+      <div style="margin-top:1rem;">
+        <!-- Child mode: instant tap -->
+        <button id="tap-found" class="tap-btn hidden">🥚 I Found It!</button>
+        <!-- Teen mode: hold to confirm -->
+        <button id="hold-found" class="hold-btn hidden">
+          <div class="hold-btn-fill" id="hold-fill"></div>
+          <span class="hold-btn-text">Hold to confirm — I Found It! 🗺️</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mini leaderboard (multiplayer only) -->
+    <div id="mini-lb-wrap" class="mini-lb hidden">
+      <div class="mini-lb-title">🏁 Race standings</div>
+      <div id="mini-lb-list"></div>
+    </div>
+
+    <!-- Waiting state -->
+    <div id="waiting-section" class="card text-center flex flex-col gap-md hidden">
+      <div class="waiting-eggs"><span>🥚</span><span>🥚</span><span>🥚</span></div>
+      <p class="text-muted">Waiting for the hunt to start…</p>
+    </div>
+
+  </div>
+  <script type="module" src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+[build]
+  publish = "public"
+  command = "echo 'No build step needed'"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/join"
+  to = "/lobby/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/game"
+  to = "/game/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/win"
+  to = "/win/index.html"
+  status = 200
+
+[build.environment]
+  NODE_VERSION = "20"

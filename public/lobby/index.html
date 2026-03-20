@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Easter Hunt — Join</title>
+  <link rel="stylesheet" href="/shared/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="/_env.js"></script>
+</head>
+<body>
+  <div class="page">
+
+    <div class="page-header">
+      <span class="egg-icon">🐣</span>
+      <h1>Easter Hunt</h1>
+    </div>
+
+    <!-- Join form -->
+    <div id="join-section" class="card flex flex-col gap-md">
+      <h2>Join the Hunt</h2>
+      <div class="field">
+        <label>Join code</label>
+        <input id="join-code" type="text" placeholder="e.g. BUNNY7" maxlength="6"
+               style="text-transform:uppercase; letter-spacing:0.15em; font-size:1.3rem; font-weight:800;" />
+      </div>
+      <div class="field">
+        <label>Your name</label>
+        <input id="player-name" type="text" placeholder="e.g. Jamie" maxlength="40" />
+      </div>
+      <div id="join-error" class="alert alert-error hidden"></div>
+      <button class="btn btn-primary" id="join-btn">Join Hunt 🐰</button>
+    </div>
+
+    <!-- Waiting room -->
+    <div id="lobby-section" class="flex flex-col gap-md w-full hidden">
+      <div class="card text-center flex flex-col gap-md">
+        <h2 id="hunt-name-display">Easter Hunt</h2>
+        <div class="waiting-eggs">
+          <span>🥚</span><span>🥚</span><span>🥚</span>
+        </div>
+        <p class="text-muted">Waiting for the organiser to start…</p>
+      </div>
+
+      <div class="card flex flex-col gap-md">
+        <div class="section-title" style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted)">Players joined</div>
+        <ul class="player-list" id="lobby-list">
+          <li class="player-item" id="self-item">You</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  <script type="module" src="lobby.js"></script>
+</body>
+</html>

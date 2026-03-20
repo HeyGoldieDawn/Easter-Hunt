@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Easter Hunt — Organiser</title>
+  <link rel="stylesheet" href="/shared/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="/_env.js"></script>
+  <style>
+    .player-row { display: flex; gap: 0.5rem; align-items: flex-start; }
+    .player-row .field { flex: 1; }
+    .player-row .btn-sm { margin-top: 1.65rem; flex-shrink: 0; }
+    .section-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 0.5rem; }
+    #live-section h2 { display: flex; align-items: center; gap: 0.5rem; }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- Header -->
+    <div class="page-header">
+      <span class="egg-icon">🐣</span>
+      <h1>Easter Hunt</h1>
+      <p class="text-muted">Set up your hunt below</p>
+    </div>
+
+    <!-- Step indicator -->
+    <div class="steps">
+      <div class="step-dot active" id="dot-1"></div>
+      <div class="step-dot" id="dot-2"></div>
+      <div class="step-dot" id="dot-3"></div>
+      <div class="step-dot" id="dot-4"></div>
+    </div>
+
+    <!-- STEP 1: Hunt setup -->
+    <div id="step-1" class="card flex flex-col gap-md">
+      <h2>Hunt Setup</h2>
+      <div class="field">
+        <label>Hunt name</label>
+        <input id="hunt-name" type="text" placeholder="Easter Hunt 2025" maxlength="60" />
+      </div>
+      <div class="field">
+        <label>Game mode</label>
+        <select id="hunt-mode">
+          <option value="multi">🏆 Multiplayer Race — first to finish wins!</option>
+          <option value="single">🌸 Single Player — self-paced adventure</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Player age group</label>
+        <select id="player-age">
+          <option value="teen">🎓 Older teens & young adults (Movies, Philosophy, Geography…)</option>
+          <option value="child">🐥 Young children (Animals, Nature, Fairy Tales)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Number of rounds <span class="text-muted">(clue + trivia pairs)</span></label>
+        <input id="num-rounds" type="number" min="1" max="15" value="5" />
+      </div>
+      <div class="field" id="topics-field">
+        <label>Trivia topics <span class="text-muted">(select at least one)</span></label>
+        <div class="checkbox-group" id="topics-group">
+          <!-- injected by JS -->
+        </div>
+      </div>
+      <div id="step1-error" class="alert alert-error hidden"></div>
+      <button class="btn btn-primary" id="next-1">Next: Write Clues →</button>
+    </div>
+
+    <!-- STEP 2: Clues -->
+    <div id="step-2" class="card flex flex-col gap-md hidden">
+      <h2>Write Your Clues</h2>
+      <p class="text-muted">Write a riddle for each round. Players must physically find the real-world location to advance.</p>
+      <div id="clues-container" class="flex flex-col gap-md"></div>
+      <div id="step2-error" class="alert alert-error hidden"></div>
+      <div class="flex gap-sm">
+        <button class="btn btn-ghost" id="back-2" style="flex:0.4">← Back</button>
+        <button class="btn btn-primary" id="next-2">Next: Add Players →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Players -->
+    <div id="step-3" class="card flex flex-col gap-md hidden">
+      <h2>Add Players</h2>
+      <p class="text-muted" id="players-hint">Add each player and describe their real gift (revealed when they finish).</p>
+      <div id="players-container" class="flex flex-col gap-md"></div>
+      <button class="btn btn-ghost btn-sm" id="add-player" style="width:auto; align-self:flex-start">+ Add player</button>
+      <div id="step3-error" class="alert alert-error hidden"></div>
+      <div class="flex gap-sm">
+        <button class="btn btn-ghost" id="back-3" style="flex:0.4">← Back</button>
+        <button class="btn btn-gold" id="create-hunt">Create Hunt 🥚</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: Launch -->
+    <div id="step-4" class="flex flex-col gap-md w-full hidden">
+      <div class="card text-center flex flex-col gap-md">
+        <h2>🎉 Hunt Created!</h2>
+        <p class="text-muted">Share this code with your players</p>
+        <div class="join-code">
+          <div class="code" id="join-code-display"></div>
+          <div class="url" id="join-url-display"></div>
+        </div>
+        <button class="btn btn-ghost btn-sm" id="copy-url" style="width:auto; align-self:center">📋 Copy join link</button>
+      </div>
+
+      <div class="card flex flex-col gap-md" id="launch-card">
+        <p class="text-muted text-center" id="player-count-hint">Waiting for players to join…</p>
+        <ul class="player-list" id="lobby-player-list"></ul>
+        <button class="btn btn-primary" id="start-hunt" disabled>Start the Hunt! 🐰</button>
+        <div id="step4-error" class="alert alert-error hidden"></div>
+      </div>
+
+      <!-- Live leaderboard (post-start) -->
+      <div id="live-section" class="card flex flex-col gap-md hidden">
+        <h2>
+          Live Leaderboard
+          <span class="live-badge"><span class="live-dot"></span> LIVE</span>
+        </h2>
+        <ul class="leaderboard" id="live-leaderboard"></ul>
+      </div>
+    </div>
+
+  </div>
+  <script type="module" src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Easter Hunt</title>
+  <link rel="stylesheet" href="/shared/style.css" />
+  <style>
+    .page { justify-content: center; min-height: 100dvh; text-align: center; }
+    .hero-egg { font-size: 5rem; margin-bottom: 0.5rem; animation: bounce 1.5s ease-in-out infinite; }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    .hero-title {
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--gold-dark), var(--forest));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.25rem;
+    }
+    .hero-sub { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem; }
+    .role-cards { display: flex; flex-direction: column; gap: 1rem; width: 100%; max-width: 360px; }
+    .role-card {
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      padding: 1.5rem; border-radius: 16px; border: 2px solid var(--border);
+      background: var(--cream); cursor: pointer; text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .role-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+    .role-card.organiser { border-color: var(--forest); background: linear-gradient(135deg, #f0faf0, var(--cream)); }
+    .role-card.player { border-color: var(--gold-dark); background: linear-gradient(135deg, #fffbe6, var(--cream)); }
+    .role-icon { font-size: 2.5rem; }
+    .role-title { font-size: 1.1rem; font-weight: 800; color: var(--text); }
+    .role-desc { font-size: 0.9rem; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+  <div class="page flex flex-col items-center gap-md">
+    <div class="hero-egg">🐣</div>
+    <div class="hero-title">Easter Hunt</div>
+    <p class="hero-sub">A real hunt. Real clues. Real prizes.</p>
+
+    <div class="role-cards">
+      <a href="/admin" class="role-card organiser">
+        <div class="role-icon">🗂️</div>
+        <div class="role-title">I'm the Organiser</div>
+        <div class="role-desc">Set up a hunt, add players & clues</div>
+      </a>
+      <a href="/join" class="role-card player">
+        <div class="role-icon">🐰</div>
+        <div class="role-title">I'm a Player</div>
+        <div class="role-desc">Join a hunt with your code</div>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

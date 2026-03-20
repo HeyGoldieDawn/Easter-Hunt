@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Easter Hunt — You Did It!</title>
+  <link rel="stylesheet" href="/shared/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="/_env.js"></script>
+  <style>
+    body { overflow: hidden; }
+    .page { justify-content: center; min-height: 100dvh; }
+
+    .winner-heading {
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      font-weight: 900;
+      text-align: center;
+      background: linear-gradient(135deg, var(--gold-dark), var(--forest));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: pop-in 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+
+    .finished-heading {
+      font-size: clamp(1.5rem, 6vw, 2.5rem);
+      font-weight: 800;
+      text-align: center;
+      color: var(--forest);
+      animation: pop-in 0.5s ease both;
+    }
+
+    @keyframes pop-in {
+      from { transform: scale(0.5); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+
+    .rank-badge {
+      display: inline-block;
+      padding: 0.4rem 1.2rem;
+      border-radius: 20px;
+      font-size: 1rem;
+      font-weight: 800;
+      background: var(--cream-dark);
+      color: var(--text);
+      text-align: center;
+    }
+    .rank-badge.gold-rank   { background: var(--gold);  color: #5A3800; }
+    .rank-badge.silver-rank { background: #D8D8D8;      color: #3A3A3A; }
+    .rank-badge.bronze-rank { background: #CD9A55;      color: white;   }
+
+    .gift-reveal-wrap {
+      animation: slide-up 0.5s ease 1.2s both;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="confetti-canvas"></canvas>
+
+  <div class="page">
+
+    <!-- Winner (rank 1) -->
+    <div id="winner-section" class="flex flex-col items-center gap-md w-full hidden" style="text-align:center">
+      <div class="gift-box" id="gift-emoji">🎁</div>
+      <div class="winner-heading">YOU WIN! 🐣</div>
+      <p class="text-muted">First to complete the Easter Hunt!</p>
+      <div class="gift-reveal-wrap">
+        <div class="gift-reveal">
+          <div style="font-size:1rem; font-weight:600; color:var(--forest); margin-bottom:0.5rem">Your prize is…</div>
+          <div class="gift-message" id="gift-text-winner">🎁</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Finisher (rank 2+) or child mode -->
+    <div id="finisher-section" class="flex flex-col items-center gap-md w-full hidden" style="text-align:center">
+      <div class="gift-box">🥚</div>
+      <div class="finished-heading" id="finish-heading">You finished!</div>
+      <div id="rank-display" class="rank-badge hidden"></div>
+      <div class="gift-reveal-wrap">
+        <div class="gift-reveal">
+          <div style="font-size:1rem; font-weight:600; color:var(--forest); margin-bottom:0.5rem">Your Easter gift is…</div>
+          <div class="gift-message" id="gift-text-finisher">🎁</div>
+        </div>
+      </div>
+
+      <!-- Leaderboard for multi -->
+      <div id="final-lb-wrap" class="card w-full hidden" style="text-align:left">
+        <h3 style="margin-bottom:0.75rem">Final Standings</h3>
+        <ul class="leaderboard" id="final-leaderboard"></ul>
+      </div>
+    </div>
+
+  </div>
+  <script type="module" src="win.js"></script>
+</body>
+</html>

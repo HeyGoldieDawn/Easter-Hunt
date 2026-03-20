@@ -1,0 +1,604 @@
+/* ─── Easter Hunt — Mobile-First Styles ──────────────────────────────────── */
+
+:root {
+  --cream:        #FBF5E6;
+  --cream-dark:   #F0E6C8;
+  --forest:       #2D6A4F;
+  --forest-light: #52B788;
+  --forest-pale:  #B7E4C7;
+  --gold:         #E9C46A;
+  --gold-dark:    #D4A017;
+  --rust:         #C77DFF;
+  --rust-dark:    #9B5FCC;
+  --sky:          #74C2E1;
+  --danger:       #E63946;
+  --danger-light: #FFD6D9;
+  --success:      #06D6A0;
+  --success-light:#CCFBEF;
+  --text:         #1A1A2E;
+  --text-muted:   #6B6B80;
+  --radius:       16px;
+  --shadow:       0 4px 24px rgba(0,0,0,0.10);
+  --shadow-lg:    0 8px 40px rgba(0,0,0,0.16);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  min-height: 100dvh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Typography ───────────────────────────────────────────────────────────── */
+
+h1 { font-size: clamp(1.6rem, 5vw, 2.4rem); font-weight: 800; letter-spacing: -0.02em; }
+h2 { font-size: clamp(1.2rem, 4vw, 1.8rem); font-weight: 700; }
+h3 { font-size: 1.1rem; font-weight: 600; }
+p  { color: var(--text-muted); line-height: 1.6; }
+
+/* ─── Layout ───────────────────────────────────────────────────────────────── */
+
+.page {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 1rem 3rem;
+  gap: 1.25rem;
+  max-width: 520px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.page-header {
+  text-align: center;
+  padding: 1rem 0 0.5rem;
+}
+
+.page-header .egg-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  animation: bob 2.5s ease-in-out infinite;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+
+/* ─── Cards ────────────────────────────────────────────────────────────────── */
+
+.card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  width: 100%;
+}
+
+.card-tight { padding: 1rem 1.25rem; }
+
+/* ─── Buttons ──────────────────────────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s, opacity 0.2s;
+  text-decoration: none;
+  width: 100%;
+  touch-action: manipulation;
+}
+
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.btn-primary {
+  background: var(--forest);
+  color: white;
+  box-shadow: 0 4px 16px rgba(45,106,79,0.35);
+}
+.btn-primary:hover:not(:disabled) { background: #235C40; }
+
+.btn-gold {
+  background: var(--gold);
+  color: var(--text);
+  box-shadow: 0 4px 16px rgba(233,196,106,0.4);
+}
+.btn-gold:hover:not(:disabled) { background: var(--gold-dark); }
+
+.btn-danger {
+  background: var(--danger);
+  color: white;
+  box-shadow: 0 4px 16px rgba(230,57,70,0.3);
+}
+
+.btn-ghost {
+  background: var(--cream-dark);
+  color: var(--text);
+  box-shadow: none;
+}
+.btn-ghost:hover:not(:disabled) { background: #E0D4B0; }
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  width: auto;
+  border-radius: 8px;
+}
+
+/* ─── Form elements ────────────────────────────────────────────────────────── */
+
+.field { display: flex; flex-direction: column; gap: 0.4rem; width: 100%; }
+.field label { font-weight: 600; font-size: 0.9rem; }
+
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--cream-dark);
+  border-radius: 10px;
+  font-size: 1rem;
+  background: white;
+  color: var(--text);
+  transition: border-color 0.2s;
+  font-family: inherit;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--forest-light);
+}
+
+textarea { resize: vertical; min-height: 80px; }
+
+/* ─── Checkboxes (topic selection) ─────────────────────────────────────────── */
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.9rem;
+  border: 2px solid var(--cream-dark);
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: white;
+}
+
+.chip-label input[type="checkbox"] { display: none; }
+.chip-label.checked {
+  background: var(--forest);
+  color: white;
+  border-color: var(--forest);
+}
+
+/* ─── Progress bar ─────────────────────────────────────────────────────────── */
+
+.progress-wrap {
+  width: 100%;
+  background: var(--cream-dark);
+  border-radius: 99px;
+  height: 12px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--forest), var(--forest-light));
+  border-radius: 99px;
+  transition: width 0.5s ease;
+}
+
+.progress-label {
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+/* ─── Join code display ─────────────────────────────────────────────────────── */
+
+.join-code {
+  background: var(--forest);
+  color: white;
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.join-code .code {
+  font-size: 2.5rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  font-variant-numeric: tabular-nums;
+}
+
+.join-code .url {
+  font-size: 0.8rem;
+  color: var(--forest-pale);
+  word-break: break-all;
+  margin-top: 0.25rem;
+}
+
+/* ─── Leaderboard ──────────────────────────────────────────────────────────── */
+
+.leaderboard { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+
+.lb-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.9rem;
+  background: var(--cream);
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+.lb-rank {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--cream-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+.lb-rank.gold   { background: var(--gold);        color: #5A3800; }
+.lb-rank.silver { background: #C0C0C0;             color: #3A3A3A; }
+.lb-rank.bronze { background: #CD7F32;             color: white;   }
+
+.lb-name { flex: 1; font-weight: 600; }
+
+.lb-progress {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.lb-done { color: var(--forest); font-weight: 700; }
+
+/* ─── Trivia option buttons ─────────────────────────────────────────────────── */
+
+.option-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.option-btn {
+  background: white;
+  border: 2.5px solid var(--cream-dark);
+  border-radius: 12px;
+  padding: 0.9rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+  line-height: 1.4;
+  touch-action: manipulation;
+}
+
+.option-btn:hover  { border-color: var(--forest-light); background: var(--forest-pale); }
+.option-btn.correct { border-color: var(--success); background: var(--success-light); }
+.option-btn.wrong   { border-color: var(--danger);  background: var(--danger-light);  }
+.option-btn:disabled { cursor: not-allowed; }
+
+.option-letter {
+  display: inline-block;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  background: var(--cream-dark);
+  text-align: center;
+  line-height: 1.4rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  margin-right: 0.4rem;
+  flex-shrink: 0;
+}
+
+/* ─── Clue card ────────────────────────────────────────────────────────────── */
+
+.clue-card {
+  background: var(--gold);
+  border-radius: var(--radius);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  position: relative;
+  box-shadow: var(--shadow-lg);
+}
+
+.clue-card::before {
+  content: "🗺️";
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.clue-text {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* Hold-to-confirm button */
+.hold-btn {
+  position: relative;
+  overflow: hidden;
+  background: var(--forest);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.hold-btn-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--forest-light);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 2s linear;
+  border-radius: 14px;
+}
+
+.hold-btn-fill.holding { transform: scaleX(1); }
+.hold-btn-text { position: relative; z-index: 1; }
+
+/* Child mode: instant tap button */
+.tap-btn {
+  background: var(--gold);
+  color: var(--text);
+  border: none;
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+  cursor: pointer;
+  width: 100%;
+  touch-action: manipulation;
+  box-shadow: var(--shadow);
+  animation: pulse-btn 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-btn {
+  0%, 100% { box-shadow: 0 4px 24px rgba(233,196,106,0.4); }
+  50%       { box-shadow: 0 4px 40px rgba(233,196,106,0.8); }
+}
+
+/* ─── Topic badge ──────────────────────────────────────────────────────────── */
+
+.topic-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.topic-movies     { background: #FFE0F0; color: #8B004A; }
+.topic-forestry   { background: var(--forest-pale); color: var(--forest); }
+.topic-travel     { background: #D4F1F9; color: #005F7A; }
+.topic-geography  { background: #E0F0E3; color: #1A5C30; }
+.topic-philosophy { background: #EDE0FF; color: #5A0099; }
+.topic-animals    { background: #FFF3CD; color: #7B5200; }
+.topic-nature     { background: #D8F8E1; color: #165C30; }
+.topic-fairytales { background: #FFE4EC; color: #8A003A; }
+
+/* ─── Status pills ─────────────────────────────────────────────────────────── */
+
+.pill {
+  display: inline-block;
+  padding: 0.2rem 0.7rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.pill-green  { background: var(--success-light); color: #005A40; }
+.pill-gold   { background: #FFF3CD; color: #7B5200; }
+.pill-grey   { background: var(--cream-dark);    color: var(--text-muted); }
+
+/* ─── Utility ──────────────────────────────────────────────────────────────── */
+
+.text-center { text-align: center; }
+.text-muted  { color: var(--text-muted); font-size: 0.9rem; }
+.gap-sm      { gap: 0.5rem; }
+.gap-md      { gap: 1rem; }
+.w-full      { width: 100%; }
+.hidden      { display: none !important; }
+.flex        { display: flex; }
+.flex-col    { flex-direction: column; }
+.items-center { align-items: center; }
+
+/* Spinning egg loader */
+.spinner {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 3px solid var(--cream-dark);
+  border-top-color: var(--forest);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 1rem auto;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Alert */
+.alert {
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.alert-error   { background: var(--danger-light);  color: var(--danger); }
+.alert-success { background: var(--success-light); color: #005A40; }
+.alert-info    { background: #E8F0FE;              color: #1A3B9C; }
+
+/* ─── Confetti canvas ──────────────────────────────────────────────────────── */
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* ─── Gift reveal ──────────────────────────────────────────────────────────── */
+
+.gift-box {
+  font-size: 5rem;
+  text-align: center;
+  animation: gift-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  cursor: pointer;
+}
+
+@keyframes gift-pop {
+  from { transform: scale(0) rotate(-10deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0deg);   opacity: 1; }
+}
+
+.gift-reveal {
+  background: linear-gradient(135deg, var(--gold) 0%, #FFD166 100%);
+  border-radius: var(--radius);
+  padding: 2rem;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  animation: slide-up 0.5s ease 0.8s both;
+}
+
+@keyframes slide-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.gift-message {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* ─── Player list (lobby) ──────────────────────────────────────────────────── */
+
+.player-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.player-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.9rem;
+  background: var(--cream);
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.player-item::before { content: "🐣"; }
+
+/* ─── Step indicator (admin) ───────────────────────────────────────────────── */
+
+.steps {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cream-dark);
+  transition: background 0.2s;
+}
+
+.step-dot.active { background: var(--forest); }
+.step-dot.done   { background: var(--forest-light); }
+
+/* ─── Waiting animation ─────────────────────────────────────────────────────── */
+
+.waiting-eggs {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  font-size: 2rem;
+  padding: 1rem;
+}
+
+.waiting-eggs span { animation: bob 1.5s ease-in-out infinite; }
+.waiting-eggs span:nth-child(2) { animation-delay: 0.2s; }
+.waiting-eggs span:nth-child(3) { animation-delay: 0.4s; }
+
+/* ─── Admin live board ─────────────────────────────────────────────────────── */
+
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 20px;
+  background: var(--danger-light);
+  color: var(--danger);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--danger);
+  animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
