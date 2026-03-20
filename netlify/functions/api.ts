@@ -181,9 +181,8 @@ export const handler: Handler = async (event: HandlerEvent) => {
     const { data: hunt } = await db.from("hunts").select("*").eq("join_code", joinCode.toUpperCase()).single();
     if (!hunt) return err("Hunt not found", 404);
     if (hunt.status === "finished") return err("This hunt has already finished");
-    if (hunt.status === "active") return err("This hunt has already started");
 
-    // Single player: find pre-created player by name
+    // Single player: find pre-created player by name (allowed even when hunt is active)
     if (hunt.mode === "single") {
       const { data: existing } = await db
         .from("players")
@@ -198,7 +197,8 @@ export const handler: Handler = async (event: HandlerEvent) => {
       });
     }
 
-    // Multi: self-join
+    // Multi: self-join (block if already started)
+    if (hunt.status === "active") return err("This hunt has already started");
     const { data: player, error } = await db
       .from("players")
       .insert({ hunt_id: hunt.id, name: playerName, gift: "", current_round: 0, current_phase: "waiting" })
