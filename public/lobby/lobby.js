@@ -15,7 +15,8 @@ const savedToken   = localStorage.getItem("eh_session_token");
 const savedHuntId  = localStorage.getItem("eh_hunt_id");
 const savedName    = localStorage.getItem("eh_player_name");
 
-if (savedToken && savedHuntId) {
+// Skip auto-resume if a new join code is in the URL (player is joining a different hunt)
+if (savedToken && savedHuntId && !codeParam) {
   fetch("/api/game/state", { headers: { "X-Session-Token": savedToken } })
     .then((r) => r.json())
     .then((state) => {
@@ -63,6 +64,9 @@ async function joinHunt() {
       return;
     }
 
+    // Clear any previous session before saving the new one
+    localStorage.removeItem("eh_gift");
+    localStorage.removeItem("eh_rank");
     localStorage.setItem("eh_session_token", data.sessionToken);
     localStorage.setItem("eh_hunt_id",       data.huntId);
     localStorage.setItem("eh_player_name",   data.playerName);
